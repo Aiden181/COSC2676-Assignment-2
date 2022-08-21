@@ -61,8 +61,8 @@ useradd dockeradmin
 #Create User Password
 passwd dockeradmin
 
-#Add user
-usermod -aG docker dockeradmin to docker group
+#Add user to docker group
+usermod -aG docker dockeradmin 
 
 #Set PasswordAuthentication to Yes
 sed -i 's/.*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config\
