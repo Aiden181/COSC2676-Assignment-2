@@ -1,0 +1,43 @@
+#Import key from Jenkins
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+#Install Java
+sudo amazon-linux-extras install java-openjdk11
+
+#Install Jenkins 
+yum install jenkins
+
+#Download and Extract Maven
+cd /opt
+wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+tar -xvzf apache-maven-3.8.6-bin.tar.gz
+mv apache
+cd ~
+
+#Moving modified files to directory
+mv -f .bash_profile /root
+cd ~
+source .bash_profile
+
+#Create symbolic link for startup and shutdown Tomcat
+ln -s /opt/tomcat/bin/startup.sh /usr/local/bin/tomcatup
+ln -s /opt/tomcat/bin/shutdown.sh /usr/local/bin/tomcatdown
+
+#Start Tomcat
+tomcatup
+
+#Set the Tomcat Manager apps to allow connections from everywhere
+sed -i -r 's/127\\\.\\d\+\\\.\\d\+\\\.\\d\+\|::1\|0:0:0:0:0:0:0:1/\.\*/g' /opt/tomcat/webapps/manager/META-INF/context.xml
+sed -i -r 's/127\\\.\\d\+\\\.\\d\+\\\.\\d\+\|::1\|0:0:0:0:0:0:0:1/\.\*/g' /opt/tomcat/webapps/host-manager/META-INF/context.xml
+
+#Create user with username = admin and password =admin
+sed -i 's/<\/tomcat-users>//g' /opt/tomcat/conf/tomcat-users.xml
+echo '<role rolename="admin-gui"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
+echo '<role rolename="manager-gui"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
+echo '<role rolename="manager-script"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
+echo '<role rolename="manager-jmx"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
+echo '<role rolename="manager-status"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
+echo '<user username="admin" password="admin" roles="admin-gui,manager-gui,manager-script,manager-jmx,manager-status"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
+echo '</tomcat-users>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
