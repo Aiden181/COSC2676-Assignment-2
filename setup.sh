@@ -18,9 +18,9 @@ service jenkins start
 
 #Download and Extract Maven
 cd /opt
-sudo wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
 tar -xvzf apache-maven-3.8.6-bin.tar.gz
-mv apache-tomcat-9.0.65 tomcat
+mv apache-maven-3.8.6 maven
 
 #Back to root folder
 cd ~
@@ -35,15 +35,6 @@ docker container prune
 #Pull Tomcat image
 docker pull tomcat
 
-#Open container with interactive mode
-docker exec -it tomcat-container /bin/bash
-
-#Move files to Webapps Directory
-cp -R webapps.dist/* webapps
-
-#Exit Interacting with Container
-exit
-
 #Move Dockerfile to Root Folder - Go Back to Root Folder
 cd COSC2676-Assignment-2
 mv Dockerfile /root
@@ -54,6 +45,15 @@ docker build -t my-tomcat-image .
 
 
 docker run -d --name tomcat-container -p 8081:8080 my-tomcat-image
+
+#Open container with interactive mode
+docker exec -it tomcat-container /bin/bash
+
+#Move files to Webapps Directory
+cp -R webapps.dist/* webapps
+
+#Exit Interacting with Container
+exit
 
 #Create User
 useradd dockeradmin
