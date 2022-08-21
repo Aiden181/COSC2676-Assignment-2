@@ -1,3 +1,7 @@
+#!/bin/bash
+#Back to root folder
+cd ~
+
 #Import key from Jenkins
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
 
@@ -17,6 +21,8 @@ cd /opt
 wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
 tar -xvzf apache-maven-3.8.6-bin.tar.gz
 mv apache
+
+#Back to root folder
 cd ~
 
 #Install and start Docker
@@ -37,6 +43,11 @@ cp -R webapps.dist/* webapps
 
 #Exit Interacting with Container
 exit
+
+#Move Dockerfile to Root Folder - Go Back to Root Folder
+cd COSC2676-Assignment-2
+mv Dockerfile /root
+cd~
 
 #Build Docker Image from Dockerfile
 docker build -t my-tomcat-image .
