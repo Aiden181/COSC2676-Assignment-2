@@ -52,3 +52,11 @@ passwd dockeradmin
 
 #Add user
 usermod -aG docker dockeradmin to docker group
+
+#Set PasswordAuthentication to Yes
+sed -i 's/.*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config\
+
+#Restart SSH Service
+service sshd reload
+
+exit
