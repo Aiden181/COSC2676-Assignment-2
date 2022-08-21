@@ -20,7 +20,7 @@ service jenkins start
 cd /opt
 sudo wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
 tar -xvzf apache-maven-3.8.6-bin.tar.gz
-mv apache
+mv apache-tomcat-9.0.65 tomcat
 
 #Back to root folder
 cd ~
