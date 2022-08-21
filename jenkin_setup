@@ -9,6 +9,9 @@ sudo amazon-linux-extras install java-openjdk11
 #Install Jenkins 
 yum install jenkins
 
+#Start Jenkin
+service jenkins start
+
 #Download and Extract Maven
 cd /opt
 wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
@@ -16,28 +19,22 @@ tar -xvzf apache-maven-3.8.6-bin.tar.gz
 mv apache
 cd ~
 
-#Moving modified files to directory
-mv -f .bash_profile /root
-cd ~
-source .bash_profile
+#Install and start Docker
+yum install docker -y
+service docker start
 
-#Create symbolic link for startup and shutdown Tomcat
-ln -s /opt/tomcat/bin/startup.sh /usr/local/bin/tomcatup
-ln -s /opt/tomcat/bin/shutdown.sh /usr/local/bin/tomcatdown
+#Remove all images
+docker container prune
 
-#Start Tomcat
-tomcatup
+#Pull Tomcat image
+docker pull tomcat
 
-#Set the Tomcat Manager apps to allow connections from everywhere
-sed -i -r 's/127\\\.\\d\+\\\.\\d\+\\\.\\d\+\|::1\|0:0:0:0:0:0:0:1/\.\*/g' /opt/tomcat/webapps/manager/META-INF/context.xml
-sed -i -r 's/127\\\.\\d\+\\\.\\d\+\\\.\\d\+\|::1\|0:0:0:0:0:0:0:1/\.\*/g' /opt/tomcat/webapps/host-manager/META-INF/context.xml
+#Open container with interactive mode
+docker exec -it tomcat-container /bin/bash
 
-#Create user with username = admin and password =admin
-sed -i 's/<\/tomcat-users>//g' /opt/tomcat/conf/tomcat-users.xml
-echo '<role rolename="admin-gui"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
-echo '<role rolename="manager-gui"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
-echo '<role rolename="manager-script"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
-echo '<role rolename="manager-jmx"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
-echo '<role rolename="manager-status"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
-echo '<user username="admin" password="admin" roles="admin-gui,manager-gui,manager-script,manager-jmx,manager-status"/>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
-echo '</tomcat-users>' | tee -a  /opt/tomcat/conf/tomcat-users.xml
+#Move files to Webapps Directory
+cp -R webapps.dist/* webapps
+
+#Build Docker Image from Dockerfile
+docker build -t my-tomcat-image .
+
