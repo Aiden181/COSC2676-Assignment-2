@@ -22,7 +22,7 @@ cd ~
 
 #Back to root folder
 cd ~
-cd COSC2767_Assignment1_BashScript_AWS_s3753278
+cd COSC2676-Assignment-2
 
 #Moving modified files to directory
 mv -f .bash_profile /root
