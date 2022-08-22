@@ -25,6 +25,3 @@ docker run -d --name tomcat-container -p 8081:8080 my-tomcat-image
 
 #Open container with interactive mode
 docker exec -it tomcat-container /bin/bash
-
-#Move files to Webapps Directory
-cp -R webapps.dist/* webapps
