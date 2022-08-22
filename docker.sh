@@ -6,9 +6,6 @@ cd ~
 yum install docker -y
 service docker start
 
-#Remove all images
-docker container prune
-
 #Pull Tomcat image
 docker pull tomcat
 
