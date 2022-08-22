@@ -20,8 +20,6 @@ tar -xvzf apache-maven-3.8.6-bin.tar.gz
 mv apache-maven-3.8.6 maven
 cd ~
 
-#Back to root folder
-cd ~
 cd COSC2676-Assignment-2
 
 #Moving modified files to directory
