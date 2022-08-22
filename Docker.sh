@@ -19,3 +19,6 @@ wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bi
 tar -xvzf apache-maven-3.8.6-bin.tar.gz
 mv apache-maven-3.8.6 maven
 cd ~
+
+#Get Default Admin Password
+cat /var/lib/jenkins/secrets/initialAdminPassword
