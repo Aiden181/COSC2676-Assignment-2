@@ -13,4 +13,4 @@ sed -i 's/.*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd
 #Restart SSH Service
 service sshd reload
 
-exit
+cd ~
