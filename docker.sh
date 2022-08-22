@@ -28,23 +28,3 @@ docker exec -it tomcat-container /bin/bash
 
 #Move files to Webapps Directory
 cp -R webapps.dist/* webapps
-
-#Exit Interacting with Container
-exit
-
-#Create User
-useradd dockeradmin
-
-#Create User Password
-passwd dockeradmin
-
-#Add user to docker group
-usermod -aG docker dockeradmin 
-
-#Set PasswordAuthentication to Yes
-sed -i 's/.*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-
-#Restart SSH Service
-service sshd reload
-
-exit
