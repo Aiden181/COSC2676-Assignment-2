@@ -10,6 +10,9 @@ sudo amazon-linux-extras install java-openjdk11
 #Install Jenkin
 yum install jenkins
 
+#Start Jenkins
+service jenkins start
+
 #Download and Extract Maven
 cd /opt
 wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
