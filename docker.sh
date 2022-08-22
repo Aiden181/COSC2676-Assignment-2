@@ -15,7 +15,7 @@ docker pull tomcat
 #Move Dockerfile to Root Folder - Go Back to Root Folder
 cd COSC2676-Assignment-2
 mv Dockerfile /root
-cd~
+cd ~
 
 #Build Docker Image from Dockerfile
 docker build -t my-tomcat-image .
