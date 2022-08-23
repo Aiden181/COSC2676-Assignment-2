@@ -17,8 +17,22 @@ cd ~
 #Build Docker Image from Dockerfile
 docker build -t my-tomcat-image .
 
-
+#Create tomcat container from my-tomcat-image
 docker run -d --name tomcat-container -p 8081:8080 my-tomcat-image
 
-#Open container with interactive mode
-docker exec -it tomcat-container /bin/bash
+#Create User
+useradd dockeradmin
+
+#Create User Password
+passwd dockeradmin
+
+#Add user to docker group
+usermod -aG docker dockeradmin 
+
+#Set PasswordAuthentication to Yes
+sed -i 's/.*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+
+#Restart SSH Service
+service sshd reload
+
+cd ~
