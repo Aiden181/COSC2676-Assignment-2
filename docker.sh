@@ -20,6 +20,9 @@ docker build -t my-tomcat-image .
 #Create tomcat container from my-tomcat-image
 docker run -d --name tomcat-container -p 8081:8080 my-tomcat-image
 
+#Back to root folder
+cd ~
+
 #Create User
 useradd dockeradmin
 
